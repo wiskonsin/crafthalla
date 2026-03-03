@@ -60,22 +60,25 @@ export function MusicPlayer() {
     if (audio && audio.paused) {
       audio.play().then(() => setPlaying(true)).catch(() => {})
     }
-  }, [])
 
-  useEffect(() => {
     const tryPlay = () => {
-      const audio = audioRef.current
-      if (audio && audio.paused) {
-        audio.play().then(() => setPlaying(true)).catch(() => {})
+      const a = audioRef.current
+      if (a && a.paused) {
+        a.play().then(() => {
+          setPlaying(true)
+          document.removeEventListener('click', tryPlay)
+          document.removeEventListener('keydown', tryPlay)
+          document.removeEventListener('pointerdown', tryPlay)
+        }).catch(() => {})
       }
-      document.removeEventListener('click', tryPlay)
-      document.removeEventListener('keydown', tryPlay)
     }
-    document.addEventListener('click', tryPlay, { once: true })
-    document.addEventListener('keydown', tryPlay, { once: true })
+    document.addEventListener('click', tryPlay)
+    document.addEventListener('keydown', tryPlay)
+    document.addEventListener('pointerdown', tryPlay)
     return () => {
       document.removeEventListener('click', tryPlay)
       document.removeEventListener('keydown', tryPlay)
+      document.removeEventListener('pointerdown', tryPlay)
     }
   }, [])
 
