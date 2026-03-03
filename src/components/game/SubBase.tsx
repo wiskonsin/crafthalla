@@ -27,13 +27,13 @@ export function SubBase({ id, baseId, position, hp, maxHp }: SubBaseProps) {
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl('subBase').then((u) => {
         url = u
         setFbxUrl(u)
       })
     } else setFbxUrl(null)
-    return () => { if (url) URL.revokeObjectURL(url) }
+    return () => { if (url && url.startsWith('blob:')) URL.revokeObjectURL(url) }
   }, [useCustomModels, config.fbxBlobId])
 
   const hpPercent = Math.max(0, hp / maxHp)
@@ -66,7 +66,7 @@ export function SubBase({ id, baseId, position, hp, maxHp }: SubBaseProps) {
               <GameCustomModel url={fbxUrl} config={config} modelType="subBase" />
             </group>
           </BuildingRiseIn>
-        ) : (useCustomModels || config.fbxBlobId) ? null : (
+        ) : !useCustomModels ? (
           <BuildingRiseIn>
             <mesh ref={meshRef} castShadow>
               <boxGeometry args={[4, 2.4, 4]} />

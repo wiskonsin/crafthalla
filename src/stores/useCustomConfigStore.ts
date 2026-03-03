@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { CustomModelType, CustomModelConfig } from '../types/customModels'
-import { DEFAULT_CUSTOM_CONFIG } from '../types/customModels'
+import { DEFAULT_CUSTOM_CONFIG, DEFAULT_MODEL_URLS } from '../types/customModels'
 import {
   saveFbxBlob,
   getFbxBlob,
@@ -16,25 +16,44 @@ import {
 export type CustomConfigState = Record<CustomModelType, CustomModelConfig>
 
 const INITIAL: CustomConfigState = {
-  central: { ...DEFAULT_CUSTOM_CONFIG },
-  generator: { ...DEFAULT_CUSTOM_CONFIG },
+  central: {
+    ...DEFAULT_CUSTOM_CONFIG,
+    scale: [3, 3, 3],
+    position: [0, 1.3, 0],
+  },
+  generator: {
+    ...DEFAULT_CUSTOM_CONFIG,
+    scale: [2.05, 2.05, 2.05],
+    position: [0, 0.4, 0],
+  },
   turret: {
     ...DEFAULT_CUSTOM_CONFIG,
-    rotation: [0, Math.PI, 0],
-    muzzleOffset: [0, 1.2, 0.8],
+    scale: [1.55, 1.55, 1.55],
+    position: [0, 1.05, -0.15],
+    muzzleOffset: [0, 0.25, -0.8],
   },
   turret_aa: {
     ...DEFAULT_CUSTOM_CONFIG,
-    rotation: [0, Math.PI, 0],
-    muzzleOffset: [0, 1.5, 1],
+    scale: [1.7, 1.7, 1.7],
+    position: [0, 0.6, 0],
+    muzzleOffset: [0, 0.3, -0.8],
   },
-  subBase: { ...DEFAULT_CUSTOM_CONFIG },
+  subBase: {
+    ...DEFAULT_CUSTOM_CONFIG,
+    scale: [2.45, 2.45, 2.45],
+    position: [0, 0.05, 0],
+  },
   engineer: { ...DEFAULT_CUSTOM_CONFIG },
   enemy: {
     ...DEFAULT_CUSTOM_CONFIG,
-    headOffset: [0, 0.5, 0.6],
+    scale: [0.83, 0.83, 0.83],
+    position: [-0.5, 1.5, 0],
+    headOffset: [0.193, 0.05, 0.052],
   },
-  harvester: { ...DEFAULT_CUSTOM_CONFIG },
+  harvester: {
+    ...DEFAULT_CUSTOM_CONFIG,
+    position: [0, 0.3, 0],
+  },
 }
 
 interface UseCustomConfigState {
@@ -55,7 +74,7 @@ interface UseCustomConfigState {
 
 export const useCustomConfigStore = create<UseCustomConfigState>((set, get) => ({
   config: { ...INITIAL },
-  hasAnyCustomModels: false,
+  hasAnyCustomModels: true,
 
   setConfig: (type, updates) => {
     set((state) => ({
@@ -187,9 +206,13 @@ export const useCustomConfigStore = create<UseCustomConfigState>((set, get) => (
 
   getBlobUrl: async (type) => {
     const cfg = get().config[type]
-    if (!cfg.fbxBlobId) return null
+    if (!cfg.fbxBlobId) {
+      return DEFAULT_MODEL_URLS[type] ?? null
+    }
     const blob = await getFbxBlob(cfg.fbxBlobId)
-    if (!blob) return null
+    if (!blob) {
+      return DEFAULT_MODEL_URLS[type] ?? null
+    }
     return URL.createObjectURL(blob)
   },
 }))

@@ -40,7 +40,7 @@ export function Turret({ id, position, hp, maxHp, enabled = true, isSelected, on
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl(turretType as CustomModelType).then((u) => {
         url = u
         setFbxUrl(u)
@@ -49,7 +49,7 @@ export function Turret({ id, position, hp, maxHp, enabled = true, isSelected, on
       setFbxUrl(null)
     }
     return () => {
-      if (url) URL.revokeObjectURL(url)
+      if (url && url.startsWith('blob:')) URL.revokeObjectURL(url)
     }
   }, [useCustomModels, config.fbxBlobId, turretType])
 
@@ -102,7 +102,7 @@ export function Turret({ id, position, hp, maxHp, enabled = true, isSelected, on
                 <GameCustomModel url={fbxUrl} config={config} modelType={turretType as CustomModelType} />
               </group>
             </BuildingRiseIn>
-          ) : (useCustomModels || config.fbxBlobId) ? null : (
+          ) : !useCustomModels ? (
             <BuildingRiseIn>
               <mesh position={[0, BASE_HEIGHT / 2, 0]} castShadow receiveShadow>
                 <cylinderGeometry args={[BASE_RADIUS, BASE_RADIUS, BASE_HEIGHT, 6]} />

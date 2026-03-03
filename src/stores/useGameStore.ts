@@ -53,7 +53,7 @@ export const useGameStore = create<GameStoreState>((set, get) => ({
   waveNumber: 0,
   kills: 0,
   gameState: 'menu',
-  useCustomModels: false,
+  useCustomModels: true,
   timeToNextWave: -1,
   selectedBuilding: null,
   selectedTurretId: null,

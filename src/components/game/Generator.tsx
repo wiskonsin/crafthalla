@@ -32,13 +32,13 @@ export function Generator({ id, position, hp, maxHp, isSelected, onSelect }: Gen
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl('generator').then((u) => {
         url = u
         setFbxUrl(u)
       })
     } else setFbxUrl(null)
-    return () => { if (url) URL.revokeObjectURL(url) }
+    return () => { if (url && url.startsWith('blob:')) URL.revokeObjectURL(url) }
   }, [useCustomModels, config.fbxBlobId])
 
   useFrame((_, delta) => {
@@ -74,7 +74,7 @@ export function Generator({ id, position, hp, maxHp, isSelected, onSelect }: Gen
               <GameCustomModel url={fbxUrl} config={config} modelType="generator" />
             </group>
           </BuildingRiseIn>
-        ) : (useCustomModels || config.fbxBlobId) ? null : (
+        ) : !useCustomModels ? (
           <BuildingRiseIn>
             <mesh castShadow receiveShadow>
               <boxGeometry args={[WIDTH, HEIGHT, DEPTH]} />

@@ -14,7 +14,7 @@ export function EnemyManager() {
   const updateAllMixers = useEnemyGlbStore((s) => s.updateAllMixers)
 
   useEffect(() => {
-    if (!useCustomModels || !fbxBlobId) {
+    if (!useCustomModels) {
       setGlbUrl(null)
       return
     }
@@ -24,7 +24,7 @@ export function EnemyManager() {
       setGlbUrl(u)
     })
     return () => {
-      if (revoke) URL.revokeObjectURL(revoke)
+      if (revoke && revoke.startsWith('blob:')) URL.revokeObjectURL(revoke)
       setGlbUrl(null)
     }
   }, [useCustomModels, fbxBlobId, setGlbUrl])

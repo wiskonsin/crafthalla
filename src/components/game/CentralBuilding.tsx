@@ -37,13 +37,13 @@ export function CentralBuilding() {
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl('central').then((u) => {
         url = u
         setFbxUrl(u)
       })
     } else setFbxUrl(null)
-    return () => { if (url) URL.revokeObjectURL(url) }
+    return () => { if (url && url.startsWith('blob:')) URL.revokeObjectURL(url) }
   }, [useCustomModels, config.fbxBlobId])
 
   useFrame((_, delta) => {
@@ -84,7 +84,7 @@ export function CentralBuilding() {
               <GameCustomModel url={fbxUrl} config={config} modelType="central" />
             </group>
           </BuildingRiseIn>
-        ) : (useCustomModels || config.fbxBlobId) ? null : (
+        ) : !useCustomModels ? (
           <BuildingRiseIn>
           <group scale={1.5}>
             <mesh ref={coreRef} position={[0, 0.4, 0]} castShadow receiveShadow>

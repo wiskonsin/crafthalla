@@ -103,13 +103,13 @@ export function Engineer({ engineer }: EngineerProps) {
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl('engineer').then((u) => {
         url = u
         setFbxUrl(u)
       })
     } else setFbxUrl(null)
-    return () => { if (url) URL.revokeObjectURL(url) }
+    return () => { if (url && url.startsWith('blob:')) URL.revokeObjectURL(url) }
   }, [useCustomModels, config.fbxBlobId])
 
   useFrame(() => {

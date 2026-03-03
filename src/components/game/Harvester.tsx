@@ -263,13 +263,13 @@ export function Harvester({ harvester }: HarvesterProps) {
 
   useEffect(() => {
     let url: string | null = null
-    if (useCustomModels && config.fbxBlobId) {
+    if (useCustomModels) {
       useCustomConfigStore.getState().getBlobUrl('harvester').then((u) => {
         url = u
         setGlbUrl(u)
       })
     } else setGlbUrl(null)
-    return () => { if (url) URL.revokeObjectURL(url) }
+    return () => { if (url && url.startsWith('blob:')) URL.revokeObjectURL(url) }
   }, [useCustomModels, config.fbxBlobId])
 
   const selectedHarvesterId = useGameStore((s) => s.selectedHarvesterId)
@@ -356,7 +356,7 @@ export function Harvester({ harvester }: HarvesterProps) {
       <group ref={modelGroupRef}>
         {showCustom ? (
           <GameCustomModel url={glbUrl} config={config} modelType="harvester" />
-        ) : (useCustomModels && config.fbxBlobId) ? null : (
+        ) : !useCustomModels ? (
           <>
             <mesh position={[0, 0.15, 0]} castShadow receiveShadow>
               <boxGeometry args={[0.7, 0.12, 1.2]} />

@@ -68,7 +68,7 @@ export function ModelSlotEditor({ type }: { type: CustomModelType }) {
       setGlbUrl(u)
     })
     return () => {
-      if (url) URL.revokeObjectURL(url)
+      if (url && url.startsWith('blob:')) URL.revokeObjectURL(url)
     }
   }, [type, config.fbxBlobId, getBlobUrl])
 

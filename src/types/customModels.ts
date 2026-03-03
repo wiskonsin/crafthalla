@@ -29,6 +29,16 @@ export const DEFAULT_CUSTOM_CONFIG: CustomModelConfig = {
   headOffset: null,
 }
 
+export const DEFAULT_MODEL_URLS: Partial<Record<CustomModelType, string>> = {
+  central: '/models/base.glb',
+  generator: '/models/generator.glb',
+  turret: '/models/turret.glb',
+  turret_aa: '/models/turret.glb',
+  subBase: '/models/base.glb',
+  enemy: '/models/enemy.glb',
+  harvester: '/models/truck.glb',
+}
+
 export const CUSTOM_MODEL_LABELS: Record<CustomModelType, string> = {
   central: 'Central building',
   generator: 'Generator',
