@@ -183,18 +183,20 @@ export const useCustomConfigStore = create<UseCustomConfigState>((set, get) => (
       for (const k of Object.keys(INITIAL) as CustomModelType[]) {
         const def = INITIAL[k]
         const s = storedConfig[k] as CustomModelConfig | undefined
-        merged[k] = {
-          ...def,
-          ...s,
-          rotation: s?.rotation ?? def.rotation,
-          headOffset: s?.headOffset ?? def.headOffset,
-        } as CustomModelConfig
+        if (s?.fbxBlobId) {
+          merged[k] = {
+            ...def,
+            ...s,
+            rotation: s.rotation ?? def.rotation,
+            headOffset: s.headOffset ?? def.headOffset,
+          } as CustomModelConfig
+        } else {
+          merged[k] = { ...def }
+        }
       }
       set({
         config: merged,
-        hasAnyCustomModels: Object.values(storedConfig).some(
-          (c) => (c as CustomModelConfig).fbxBlobId != null
-        ),
+        hasAnyCustomModels: true,
       })
     }
   },
