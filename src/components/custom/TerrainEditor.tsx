@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { useTerrainStore, type TerrainPreset, type RockPreset } from '../../stores/useTerrainStore'
+import { useTerrainStore } from '../../stores/useTerrainStore'
 import { TerrainPreview } from './TerrainPreview'
 
 const TERRAIN_PROMPT = `DIRECTIVE:

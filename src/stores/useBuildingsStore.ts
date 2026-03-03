@@ -140,7 +140,7 @@ export const useBuildingsStore = create<BuildingsState>((set, get) => ({
       createdAt: Date.now(),
     }
     set((state) => ({ buildings: [...state.buildings, building] }))
-    const yFloat = type === 'generator' ? 0.75 : type === 'subBase' ? 1.2 : 0
+    const yFloat = type === 'generator' ? 0.75 : 0
     useFloatingTextsStore.getState().addText(`-${cost}`, '#ff4444', { x, y: yFloat, z })
     return true
   },

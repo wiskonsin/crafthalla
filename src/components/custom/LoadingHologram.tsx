@@ -2,7 +2,6 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const VERTEX_COUNT_SPHERE = 32
 const MORPH_SPEED = 0.8
 const ROTATE_SPEED = 0.6
 const COLOR = new THREE.Color('#00e5ff')

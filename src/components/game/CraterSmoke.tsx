@@ -1,7 +1,7 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useCratersStore, CRATER_LIFETIME } from '../../stores/useCratersStore'
+import { useCratersStore } from '../../stores/useCratersStore'
 
 const PARTICLES_PER_CRATER = 12
 const SMOKE_DURATION = 8000

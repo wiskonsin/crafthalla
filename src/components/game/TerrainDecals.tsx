@@ -152,8 +152,6 @@ export function TerrainDecals() {
       dirtCtx.fill()
     }
 
-    let trackDirty = false
-
     fadeAccum.current += delta
     if (fadeAccum.current > 0.1) {
       fadeAccum.current = 0
@@ -161,7 +159,6 @@ export function TerrainDecals() {
       trackCtx.fillStyle = `rgba(0,0,0,${TRACK_FADE_SPEED})`
       trackCtx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
       trackCtx.globalCompositeOperation = 'source-over'
-      trackDirty = true
     }
 
     const tw = radiusToCanvas(TRACK_WIDTH)
@@ -221,7 +218,6 @@ export function TerrainDecals() {
             trackCtx.fill()
           }
 
-          trackDirty = true
         }
       }
       lastHarvesterPositions.current.set(h.id, { u, v })
