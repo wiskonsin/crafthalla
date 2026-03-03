@@ -119,7 +119,7 @@ export function Turret({ id, position, hp, maxHp, enabled = true, isSelected, on
                 />
               </mesh>
             </BuildingRiseIn>
-          )}
+          ) : null}
         </group>
 
         <PulseRing color="#ff3333" radius={0.7} y={0.03} />

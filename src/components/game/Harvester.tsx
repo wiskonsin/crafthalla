@@ -423,7 +423,7 @@ export function Harvester({ harvester }: HarvesterProps) {
               <meshBasicMaterial color="#ffee88" />
             </mesh>
           </>
-        )}
+        ) : null}
 
         {harvester.state === 'gathering' && (
           <>

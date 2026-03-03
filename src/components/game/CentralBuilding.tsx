@@ -123,7 +123,7 @@ export function CentralBuilding() {
             </mesh>
           </group>
           </BuildingRiseIn>
-        )}
+        ) : null}
 
         {!useCustomModels && level >= 2 && (
           <mesh castShadow position={[0, 2.2, 0]}>

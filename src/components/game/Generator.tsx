@@ -91,7 +91,7 @@ export function Generator({ id, position, hp, maxHp, isSelected, onSelect }: Gen
               />
             </mesh>
           </BuildingRiseIn>
-        )}
+        ) : null}
         <PulseRing color="#3388ff" radius={1.5} y={-0.70} />
       </group>
     </RigidBody>

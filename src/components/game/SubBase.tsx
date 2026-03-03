@@ -73,7 +73,7 @@ export function SubBase({ id, baseId, position, hp, maxHp }: SubBaseProps) {
               <meshStandardMaterial color="#2a3a5a" roughness={0.7} metalness={0.3} />
             </mesh>
           </BuildingRiseIn>
-        )}
+        ) : null}
         <mesh position={[0, 1.5, 0]}>
           <boxGeometry args={[3.2, 0.1, 0.06]} />
           <meshBasicMaterial color="#1a1a1a" />
